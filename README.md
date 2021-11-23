@@ -1,6 +1,8 @@
 # docker-copier
 
-Lightweight alpine-based Docker container to securely run [copier](https://github.com/copier-org/copier). You can read the copier documentation [here](https://copier.readthedocs.io/en/stable/).
+Lightweight alpine-based Docker container to securely run [copier](https://github.com/copier-org/copier).
+
+You can read the copier documentation [here](https://copier.readthedocs.io/en/stable/).
 
 ### Features
 - Based on official `python:3.10-alpine` image
@@ -9,9 +11,11 @@ Lightweight alpine-based Docker container to securely run [copier](https://githu
 - Mounts `~/.ssh` as read-only inside container so copier can work with your private GitHub repositories
 - Uses multi-stage builds to trim size of final image
 
+View on [Docker Hub](https://hub.docker.com/r/cbp44/copier).
+
 ## Quick Start
 
-Just pull and run the image with Docker.
+Just pull and run the image from [Docker Hub](https://hub.docker.com/r/cbp44/copier).
 
 ```shell
 # Pull the image
@@ -35,7 +39,7 @@ docker run -v ./dest_path:/usr/src/dest_path copier \
 
 ## Build it Yourself
 
-Build and run the container using `docker-compose`.
+Clone [this repository](https://github.com/cbp44/docker-copier), then build and run the container using `docker-compose`.
 
 ```shell
 # Clone repository
