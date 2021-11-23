@@ -1,0 +1,17 @@
+version: "3.2"
+
+services:
+  copier:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: copier
+    volumes:
+      # Bind your local ssh config/keys inside running container for access
+      # to private git repos
+      - ~/.ssh:/home/user/.ssh/:ro
+
+      # Bind ./dest_path to a location in the container for quicker host access
+      - type: bind
+        source: ./dest_path
+        target: /usr/src/dest_path

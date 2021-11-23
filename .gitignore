@@ -1,0 +1,2 @@
+dest_path/*
+!dest_path/.gitkeep
