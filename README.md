@@ -31,9 +31,9 @@ The example usage below creates a new Snakemake workflow from the [`snakemake-wo
 
 ```shell
 # Path where copier output will go
-mkdir dest_path
+mkdir workflow
 
-docker run -v ./dest_path:/usr/src/dest_path copier \
+docker run --rm -it -v $(pwd)/workflow:/usr/src/dest_path copier \
   copy gh:snakemake-workflows/snakemake-workflow-template /usr/src/dest_path
 ```
 
@@ -49,6 +49,8 @@ git clone https://github.com/cbp44/docker-copier
 docker-compose build
 
 # Run copier
-docker-compose run --rm copier \
+docker-compose run --rm -it copier \
   copy gh:snakemake-workflows/snakemake-workflow-template /usr/src/dest_path
+
+# Output will be in ./dest_path
 ```
