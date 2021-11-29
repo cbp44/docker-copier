@@ -1,41 +1,59 @@
 FROM docker.io/python:3.10-alpine AS base
 
+#################### update ####################
+FROM base AS update
+
+# Obtain any recent security updates not in image
+RUN set -eux; \
+  apk update; \
+  apk upgrade --verbose
+#################### /update ####################
+
 #################### builder ####################
-FROM base AS builder
+FROM update AS builder
 
 RUN set -eux; \
   # Install gcc and libraries needed for building regex during pip install step
   apk add --no-cache \
-    gcc \
-    musl-dev; \
+    gcc=~10.3 \
+    musl-dev=~1.2; \
   # Install copier
-  pip install --no-cache-dir copier
-
+  pip install --no-cache-dir copier==5.1.0; \
+  apk del \
+    gcc \
+    musl-dev
 #################### /builder ####################
 
 #################### final ####################
-FROM base AS final
+FROM update AS final
+
+ARG COPIER_DEST_PATH
+ENV COPIER_DEST_PATH=${COPIER_DEST_PATH:-/usr/src/copier}
+
+WORKDIR "$COPIER_DEST_PATH"
 
 # Add non-root user to run copier
 RUN set -eux; \
   adduser -D user; \
-  mkdir -p /usr/src/dest_path; \
-  chown user /usr/src/dest_path
+  chown -R user:user "$COPIER_DEST_PATH"
 
-# Install git
 RUN set -eux; \
-  apk add --no-cache git
+  apk add --no-cache \
+    # Install git, dependency of copier
+    git=~2.32 \
+    # Install su-exec to drop down from root when running copier
+    su-exec=0.2-r1
 
 # Copy over python packages and copier script from builder
 COPY --from=builder /usr/local/lib/python3.10 /usr/local/lib/python3.10
 COPY --from=builder /usr/local/bin/copier /usr/local/bin/copier
 
-WORKDIR /usr/src/dest_path
+COPY ./docker-entrypoint.sh /docker-entrypoint.sh
 
-# Run as non-root user created earlier
-USER user
+RUN set -eux; \
+  chmod 0755 /docker-entrypoint.sh
 
-ENTRYPOINT ["copier"]
-CMD ["--help"]
-
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["copier","--version"]
+# CMD ["bash"]
 #################### /final ####################
