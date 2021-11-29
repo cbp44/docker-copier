@@ -33,8 +33,10 @@ The example usage below creates a new Snakemake workflow from the [`snakemake-wo
 # Path where copier output will go
 mkdir workflow
 
-docker run --rm -it -v $(pwd)/workflow:/usr/src/dest_path copier \
-  copy gh:snakemake-workflows/snakemake-workflow-template /usr/src/dest_path
+docker run --rm -it -v $(pwd)/workflow:/usr/src/copier copier \
+  copy gh:snakemake-workflows/snakemake-workflow-template /usr/src/copier
+
+# Output will be in $(pwd)/workflow
 ```
 
 ## Build it Yourself

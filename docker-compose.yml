@@ -1,4 +1,4 @@
-version: "3.2"
+version: "3.5"
 
 services:
   copier:
@@ -14,4 +14,4 @@ services:
       # Bind ./dest_path to a location in the container for quicker host access
       - type: bind
         source: ./dest_path
-        target: /usr/src/dest_path
+        target: ${COPIER_DEST_PATH:-/usr/src/copier}
