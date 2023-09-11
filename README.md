@@ -4,14 +4,16 @@ Lightweight alpine-based Docker container to securely run [copier](https://githu
 
 You can read the copier documentation [here](https://copier.readthedocs.io/en/stable/).
 
+This repository is cloned from [here](https://github.com/cbp44/docker-copier), and re-purposed primarily for personal use. 
+
 ### Features
 - Based on official `python:3.10-alpine` image
 - Runs copier as non-root user
 - Default volume configuration persists results back to the host machine
-- Mounts `~/.ssh` as read-only inside container so copier can work with your private GitHub repositories
+~~- Mounts `~/.ssh` as read-only inside container so copier can work with your private GitHub repositories~~
 - Uses multi-stage builds to trim size of final image
 
-View on [Docker Hub](https://hub.docker.com/r/cbp44/copier).
+View on [GitHub Registry](ghcr.io/ejoosterop/docker-copier).
 
 ## Quick Start
 
@@ -41,6 +43,7 @@ docker run --rm -it -v ${pwd}/workflow:/usr/src/copier ghcr.io/ejoosterop/docker
 
 ## Build it Yourself
 
+**NOTE** THIS DOES CURRENTLY NOT WORK AS DESCRIBED.
 Clone [this repository](https://github.com/EJOOSTEROP/docker-copier), then build and run the container using `docker-compose`.
 
 ```shell
@@ -51,8 +54,8 @@ git clone https://github.com/EJOOSTEROP/docker-copier
 docker-compose build
 
 # Run copier
-~~docker-compose run --rm -it copier \~~
-  ~~copy gh:snakemake-workflows/snakemake-workflow-template /usr/src/dest_path~~
+docker-compose run --rm -it copier \
+  copy gh:snakemake-workflows/snakemake-workflow-template /usr/src/dest_path
 
 # Output will be in ./dest_path
 ```
