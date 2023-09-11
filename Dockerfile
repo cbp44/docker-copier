@@ -54,6 +54,7 @@ RUN set -eux; \
   chmod 0755 /docker-entrypoint.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["copier","--version"]
+# CMD ["copier","--version"]
+CMD ["copier"]
 # CMD ["bash"]
 #################### /final ####################
