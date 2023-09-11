@@ -44,6 +44,7 @@ docker run --rm -it -v ${pwd}/workflow:/usr/src/copier ghcr.io/ejoosterop/docker
 ## Build it Yourself
 
 **NOTE** THIS DOES CURRENTLY NOT WORK AS DESCRIBED.
+
 Clone [this repository](https://github.com/EJOOSTEROP/docker-copier), then build and run the container using `docker-compose`.
 
 ```shell
